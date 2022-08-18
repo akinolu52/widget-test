@@ -426,7 +426,7 @@ async function widget1() {
 
     console.log(config);
 
-    defer();
+    // defer();
 
     // loading jQuery dynamically
     function defer(method) {
@@ -650,7 +650,9 @@ async function widget1() {
         `;
 
         // appending html to the div
-        $(wc).append(theHTML);
+        // this.div.innerHTML = html;
+        // $(wc).append(theHTML);
+        wc.appendChild(theHTML);
 
         renderSteps(steps);
 
