@@ -240,7 +240,7 @@ const showSideBar = () => {
         top: 0;
         position: fixed;
     `;
-    document.getElementById('redata-widget-container').style.display = "block";
+    document.getElementById('redata-widget-container').style.display = "flex";
 }
 
 const getAllFunnelIds = () => {
@@ -450,8 +450,8 @@ async function widget1() {
         let cssFile = document.createElement("link");
         cssFile.type = "text/css";
         cssFile.rel = "stylesheet";
-        cssFile.href = "https://github.com/akinolu52/widget-test/blob/removed-jquery/widget/styles.css";
-        document.head.appendChild(cssFile)
+        cssFile.href = "https://cdn.jsdelivr.net/gh/akinolu52/widget-test@css-fix/widget/styles.css";
+        document.head.appendChild(cssFile);
     }
 
     function loadHtml() {
