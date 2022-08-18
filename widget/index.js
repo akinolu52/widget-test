@@ -392,10 +392,12 @@ const repopulateElements = (steps) => {
         if (step.action === 'visited') return;
 
         if (currentPage === step.currentPage) {
-            const htmlElement = document.querySelector(step.value);
+            const htmlElement = document?.querySelector?.(step.value);
 
-            htmlElement.setAttribute('data-funnel-id', step.index);
-            htmlElement.classList.add('redata-widget-add-selected-border');
+            if (htmlElement) {
+                htmlElement.setAttribute('data-funnel-id', step.index);
+                htmlElement.classList.add('redata-widget-add-selected-border');
+            }
         }
     });
 };
@@ -674,7 +676,9 @@ async function widget1() {
         document.addEventListener('click', onClick);
 
         //Repopulate the elements page if reloaded or routed to another page
-        repopulateElements(steps);
+        setTimeout(function () {
+            repopulateElements(steps);
+        }, 2000);
     }
 }
 
