@@ -404,7 +404,7 @@ async function widget1() {
     console.log('loaded widget1');
 
     const tag = document.createElement("div");
-    tag.className = 'widget-1';
+    tag.className = 'redata-widget-1';
     document.body.appendChild(tag);
 
     // getting the script id
@@ -427,6 +427,8 @@ async function widget1() {
     console.log(config);
 
     // defer();
+    init()
+
 
     // loading jQuery dynamically
     function defer(method) {
@@ -444,7 +446,7 @@ async function widget1() {
         }
     }
 
-    function init($) {
+    function init() {
         console.log('jquery loaded');
         // html template
         let theHTML = `
@@ -649,10 +651,7 @@ async function widget1() {
             </section>
         `;
 
-        // appending html to the div
-        // this.div.innerHTML = html;
-        // $(wc).append(theHTML);
-        wc.appendChild(theHTML);
+        document.getElementsByClassName('redata-widget-1')[0].innerHTML = theHTML;
 
         renderSteps(steps);
 
@@ -662,10 +661,6 @@ async function widget1() {
 
         //Repopulate the elements page if reloaded or routed to another page
         repopulateElements(steps);
-
-
-        // $(".redata-widget-logo").click(function () {
-        // });
 
     }
 }
