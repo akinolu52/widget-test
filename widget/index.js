@@ -1,5 +1,5 @@
 
-
+console.log('loaded');
 
 const getFullPath = (targetElement, exact = true) => {
     const stack = [];
@@ -401,6 +401,8 @@ const repopulateElements = (steps) => {
 };
 
 async function widget1() {
+    console.log('loaded widget1');
+
     const tag = document.createElement("div");
     tag.className = 'widget-1';
     document.body.appendChild(tag);
@@ -443,6 +445,7 @@ async function widget1() {
     }
 
     function init($) {
+        console.log('jquery loaded');
         // html template
         let theHTML = `
             <section id="redata-widget-section-container">
@@ -664,3 +667,5 @@ async function widget1() {
 
     }
 }
+
+console.log('loaded end');
