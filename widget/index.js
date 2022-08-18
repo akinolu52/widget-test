@@ -446,10 +446,16 @@ async function widget1() {
         }
     }
 
-    function init() {
-        console.log('jquery loaded');
-        // html template
-        let theHTML = `
+    function loadCss() {
+        let cssFile = document.createElement("link");
+        cssFile.type = "text/css";
+        cssFile.rel = "stylesheet";
+        cssFile.href = "./styles.css";
+        document.head.appendChild(cssFile)
+    }
+
+    function loadHtml() {
+        const theHTML = `
             <section id="redata-widget-section-container">
                 <div id="redata-widget-logo-container">
                     <img
@@ -652,6 +658,14 @@ async function widget1() {
         `;
 
         document.getElementsByClassName('redata-widget-1')[0].innerHTML = theHTML;
+    }
+
+    function init() {
+        console.log('init redata widget 1');
+        loadCss();
+
+        loadHtml();
+        // html template
 
         renderSteps(steps);
 
@@ -661,7 +675,6 @@ async function widget1() {
 
         //Repopulate the elements page if reloaded or routed to another page
         repopulateElements(steps);
-
     }
 }
 
