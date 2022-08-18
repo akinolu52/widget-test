@@ -450,7 +450,7 @@ async function widget1() {
         let cssFile = document.createElement("link");
         cssFile.type = "text/css";
         cssFile.rel = "stylesheet";
-        cssFile.href = "./styles.css";
+        cssFile.href = "https://github.com/akinolu52/widget-test/blob/removed-jquery/widget/styles.css";
         document.head.appendChild(cssFile)
     }
 
