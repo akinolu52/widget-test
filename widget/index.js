@@ -450,7 +450,7 @@ async function widget1() {
         let cssFile = document.createElement("link");
         cssFile.type = "text/css";
         cssFile.rel = "stylesheet";
-        cssFile.href = "https://cdn.jsdelivr.net/gh/akinolu52/widget-test@ctest-1/widget/styles.css";
+        cssFile.href = "https://cdn.jsdelivr.net/gh/akinolu52/widget-test@test-1/widget/styles.css";
         document.head.appendChild(cssFile);
     }
 
