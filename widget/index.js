@@ -678,7 +678,7 @@ async function widget1() {
         //Repopulate the elements page if reloaded or routed to another page
         setTimeout(function () {
             repopulateElements(steps);
-        }, 2000);
+        }, 10000);
     }
 }
 
