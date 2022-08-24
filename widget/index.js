@@ -531,7 +531,7 @@ async function testJsDom() {
                 }
             }
         });
-    }, 5000);
+    }, 1000);
 
     // const div = shadowDom?.querySelectorAll('.abc')[0]
 
