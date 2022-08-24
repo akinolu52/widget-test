@@ -12,7 +12,7 @@ const { JSDOM } = jsdom;
 console.log('loaded 2');
 
 
-function getFullPath(targetElement, exact = true) {
+function getFullPath(targetElement) {
     const stack = [];
     let nextElement = targetElement;
 
@@ -22,17 +22,18 @@ function getFullPath(targetElement, exact = true) {
         if (nextElement.getAttribute('id')) {
             stack.unshift(`#${nextElement.id}`);
         } else if (nextElement.getAttribute('class')) {
-            const index = exact ? getPosAsChildOfParent(nextElement) : null;
+            const index = getPosAsChildOfParent(nextElement);
 
             // console.log(Array.from(nextElement.classList)[0])
             stack.unshift(
-                `${nodeName}.${Array.from(nextElement.classList)[0]}${exact ? `:nth-child(${index})` : ''}`,
+                `${nodeName}:nth-child(${index})`,
+                // `${nodeName}.${Array.from(nextElement.classList)[0]}${exact ? `:nth-child(${index})` : ''}`,
                 // `${nodeName}.${Array.from(nextElement.classList).join('.')}${exact ? `:nth-child(${index})` : ''}`,
             );
         } else {
-            const index = exact ? getPosAsChildOfParent(nextElement) : null;
+            const index = getPosAsChildOfParent(nextElement);
 
-            stack.unshift(`${nodeName}${exact ? `:nth-child(${index})` : ''}`);
+            stack.unshift(`${nodeName}:nth-child(${index})`);
         }
 
         nextElement = nextElement.parentNode;
