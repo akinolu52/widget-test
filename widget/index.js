@@ -390,20 +390,20 @@ const onClick = (event) => {
 };
 
 const repopulateElements = (steps) => {
-    const currentPage = window.location.href;
+    // const currentPage = window.location.href;
 
-    steps.forEach((step) => {
-        if (step.action === 'visited') return;
+    // steps.forEach((step) => {
+    //     if (step.action === 'visited') return;
 
-        if (currentPage === step.currentPage) {
-            const htmlElement = document?.querySelector?.(step.value);
+    //     if (currentPage === step.currentPage) {
+    //         const htmlElement = document?.querySelector?.(step.value);
 
-            if (htmlElement) {
-                htmlElement.setAttribute('data-funnel-id', step.index);
-                htmlElement.classList.add('redata-widget-add-selected-border');
-            }
-        }
-    });
+    //         if (htmlElement) {
+    //             htmlElement.setAttribute('data-funnel-id', step.index);
+    //             htmlElement.classList.add('redata-widget-add-selected-border');
+    //         }
+    //     }
+    // });
 };
 
 function testJsDom() {
@@ -413,16 +413,47 @@ function testJsDom() {
             <body> ${document.body.getInnerHTML()} </body> 
         </html>`;
     console.log(currHtml);
-    const dom = new JSDOM(currHtml);
+    const dom = new JSDOM(currHtml, { runScripts: 'dangerously' });
 
-    console.log(dom.window.document);
-    console.log(dom.window.document?.defaultView);
+    const jsDomDoc = dom.window.document;
 
-    const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
-    // global.document = doc;
-    // global.window = doc.defaultView;
-    console.log(doc);
-    console.log(doc?.defaultView);
+    console.log('jsDomDoc => ', jsDomDoc);
+    // console.log(jsDomDoc?.defaultView);
+
+    // const x = jsDomDoc?.querySelector('body > div.w3-content > div > div.w3-col.l8.s12 > div:nth-child(3) > div:nth-child(3) > p');
+    // x.setAttribute('data-funnel-id', 1)
+    // console.log(x.classList.add('redata-widget-add-selected-border'));
+    // console.log('con => ', x.textContent)
+
+
+    // const doc = new JSDOM('<!doctype html><html><body></body></html>');
+    // // global.document = doc;
+    // // global.window = doc.defaultView;
+    // console.log(doc);
+    // console.log(doc?.defaultView);
+
+    const shadowDom = dom.window.document.body.querySelector('#root')?.shadowRoot;
+    console.log('shadow dom', shadowDom);
+
+    // steps.forEach((step) => {
+    //     if (step.action === 'visited') return;
+
+    //     if (currentPage === step.currentPage) {
+    //         console.log('finding ', step.value);
+
+    //         const htmlElement = jsDomDoc?.querySelector?.(step.value);
+    //         console.log('htmlElement', htmlElement);
+
+    //         if (htmlElement) {
+    //             htmlElement.setAttribute('data-funnel-id', step.index);
+    //             htmlElement.classList.add('redata-widget-add-selected-border');
+    //         }
+    //     }
+    // });
+    // const div = shadowDom?.querySelectorAll('.abc')[0]
+
+    // console.log(Array.from(div?.classList))
+    // console.log('color', dom.window.getComputedStyle(div).color);
 }
 
 async function widget1() {
