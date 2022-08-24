@@ -1,5 +1,9 @@
 
 console.log('loaded');
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+console.log('loaded 2');
+
 
 const getFullPath = (targetElement, exact = true) => {
     const stack = [];
@@ -110,9 +114,9 @@ const renderSteps = (steps) => {
 };
 
 const reRenderSteps = (steps) => {
-    var e = document.querySelector('.widget__steps');
+    let e = document.querySelector('.widget__steps');
     //remove all elements and add to it
-    var child = e?.lastElementChild;
+    let child = e?.lastElementChild;
     while (child) {
         e?.removeChild(child);
         child = e?.lastElementChild;
@@ -402,6 +406,18 @@ const repopulateElements = (steps) => {
     });
 };
 
+function testJsDom() {
+    const currHtml = ` <!DOCTYPE html>
+        <html lang="en">
+            <head> ${document.head.getInnerHTML()} </head> 
+            <body> ${document.body.getInnerHTML()} </body> 
+        </html>`;
+    console.log(currHtml);
+    const dom = new JSDOM(currHtml);
+
+    console.log(dom.window.document);
+}
+
 async function widget1() {
     console.log('loaded widget1');
 
@@ -438,10 +454,10 @@ async function widget1() {
             init($);
             return;
         } else {
-            var script = document.createElement("script");
+            let script = document.createElement("script");
             script.type = "text/javascript";
             script.src = config.jqueryURL;
-            document.getElementsByTagName("head")[0].appendChild(script);
+            document.head.appendChild(script);
             setTimeout(function () {
                 defer(method);
             }, 50);
@@ -678,7 +694,10 @@ async function widget1() {
         //Repopulate the elements page if reloaded or routed to another page
         setTimeout(function () {
             repopulateElements(steps);
-        }, 10000);
+            console.log('repopulated end');
+        }, 5000);
+
+        testJsDom();
     }
 }
 
