@@ -416,6 +416,13 @@ function testJsDom() {
     const dom = new JSDOM(currHtml);
 
     console.log(dom.window.document);
+    console.log(dom.window.document?.defaultView);
+
+    const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
+    // global.document = doc;
+    // global.window = doc.defaultView;
+    console.log(doc);
+    console.log(doc?.defaultView);
 }
 
 async function widget1() {
