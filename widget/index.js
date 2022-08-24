@@ -24,8 +24,10 @@ function getFullPath(targetElement, exact = true) {
         } else if (nextElement.getAttribute('class')) {
             const index = exact ? getPosAsChildOfParent(nextElement) : null;
 
+            // console.log(Array.from(nextElement.classList)[0])
             stack.unshift(
-                `${nodeName}.${Array.from(nextElement.classList).join('.')}${exact ? `:nth-child(${index})` : ''}`,
+                `${nodeName}.${Array.from(nextElement.classList)[0]}${exact ? `:nth-child(${index})` : ''}`,
+                // `${nodeName}.${Array.from(nextElement.classList).join('.')}${exact ? `:nth-child(${index})` : ''}`,
             );
         } else {
             const index = exact ? getPosAsChildOfParent(nextElement) : null;
@@ -335,7 +337,7 @@ const onClick = (event) => {
             //Use attribute id or generate random id
             const id = target.id ? `#${target.id}` : getFullPath(target);
 
-            // console.log(getFullPath(target));
+            console.log(getFullPath(target));
             // console.log(getDomPath(target));
 
             const step = {
@@ -349,7 +351,7 @@ const onClick = (event) => {
 
             activeFunnel = steps.length;
 
-            localStorage.setItem('redata_funnel', JSON.stringify(steps));
+            // localStorage.setItem('redata_funnel', JSON.stringify(steps));
             //Add attribute to
             target.setAttribute('data-funnel-id', steps.length);
             // appendStep(step, step.index);
@@ -512,21 +514,24 @@ async function testJsDom() {
 
     const currentPage = window.location.href;
 
-    steps.forEach((step) => {
-        if (step.action === 'visited') return;
+    setTimeout(() => {
+        steps.forEach((step) => {
+            if (step.action === 'visited') return;
 
-        if (currentPage === step.currentPage) {
-            console.log('finding ', step.value);
+            if (currentPage === step.currentPage) {
+                console.log('finding ', step.value);
 
-            const htmlElement = shadowDomDoc?.querySelector?.(step.value);
-            console.log('htmlElement', htmlElement);
+                const htmlElement = shadowDomDoc?.querySelector?.(step.value);
+                console.log('htmlElement', htmlElement);
 
-            if (htmlElement) {
-                htmlElement.setAttribute('data-funnel-id', step.index);
-                htmlElement.classList.add('redata-widget-add-selected-border');
+                if (htmlElement) {
+                    htmlElement.setAttribute('data-funnel-id', step.index);
+                    htmlElement.classList.add('redata-widget-add-selected-border');
+                }
             }
-        }
-    });
+        });
+    }, 5000);
+
     // const div = shadowDom?.querySelectorAll('.abc')[0]
 
     // console.log(Array.from(div?.classList))
