@@ -1,11 +1,18 @@
+// import { Window } from 'happy-dom';
+// const happyDom = require('happy-dom');
+// const { Window } = happyDom;
 
 console.log('loaded');
+
+// const happyDomWindow = new Window();
+// const happyDomDocument = happyDomWindow.document;
+
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 console.log('loaded 2');
 
 
-const getFullPath = (targetElement, exact = true) => {
+function getFullPath(targetElement, exact = true) {
     const stack = [];
     let nextElement = targetElement;
 
@@ -31,6 +38,33 @@ const getFullPath = (targetElement, exact = true) => {
 
     return `html > ${stack.join(' > ')}`;
 };
+
+function getDomPath(el) {
+    var stack = [];
+    while (el.parentNode != null) {
+        console.log(el.nodeName);
+        var sibCount = 0;
+        var sibIndex = 0;
+        for (var i = 0; i < el.parentNode.childNodes.length; i++) {
+            var sib = el.parentNode.childNodes[i];
+            if (sib.nodeName == el.nodeName) {
+                if (sib === el) {
+                    sibIndex = sibCount;
+                }
+                sibCount++;
+            }
+        }
+        if (el.hasAttribute('id') && el.id != '') {
+            stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+        } else if (sibCount > 1) {
+            stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+        } else {
+            stack.unshift(el.nodeName.toLowerCase());
+        }
+        el = el.parentNode;
+    }
+    return stack.join(' > ');
+}
 
 const getPosAsChildOfParent = (sib) => {
     const parentChildCount = sib.parentNode.childElementCount;
@@ -301,6 +335,9 @@ const onClick = (event) => {
             //Use attribute id or generate random id
             const id = target.id ? `#${target.id}` : getFullPath(target);
 
+            // console.log(getFullPath(target));
+            // console.log(getDomPath(target));
+
             const step = {
                 action: 'CLICK',
                 value: id,
@@ -390,34 +427,35 @@ const onClick = (event) => {
 };
 
 const repopulateElements = (steps) => {
-    // const currentPage = window.location.href;
+    const currentPage = window.location.href;
 
-    // steps.forEach((step) => {
-    //     if (step.action === 'visited') return;
+    steps.forEach((step) => {
+        if (step.action === 'visited') return;
 
-    //     if (currentPage === step.currentPage) {
-    //         const htmlElement = document?.querySelector?.(step.value);
+        if (currentPage === step.currentPage) {
+            const htmlElement = document?.querySelector?.(step.value);
 
-    //         if (htmlElement) {
-    //             htmlElement.setAttribute('data-funnel-id', step.index);
-    //             htmlElement.classList.add('redata-widget-add-selected-border');
-    //         }
-    //     }
-    // });
+            if (htmlElement) {
+                htmlElement.setAttribute('data-funnel-id', step.index);
+                htmlElement.classList.add('redata-widget-add-selected-border');
+            }
+        }
+    });
 };
 
-function testJsDom() {
+async function testJsDom() {
+    console.log('ik');
     const currHtml = ` <!DOCTYPE html>
         <html lang="en">
             <head> ${document.head.getInnerHTML()} </head> 
             <body> ${document.body.getInnerHTML()} </body> 
         </html>`;
-    console.log(currHtml);
-    const dom = new JSDOM(currHtml, { runScripts: 'dangerously' });
+    // console.log(currHtml);
+    // const dom = new JSDOM(currHtml, { runScripts: 'dangerously' });
 
-    const jsDomDoc = dom.window.document;
+    // const jsDomDoc = dom.window.document;
 
-    console.log('jsDomDoc => ', jsDomDoc);
+    // console.log('jsDomDoc => ', jsDomDoc);
     // console.log(jsDomDoc?.defaultView);
 
     // const x = jsDomDoc?.querySelector('body > div.w3-content > div > div.w3-col.l8.s12 > div:nth-child(3) > div:nth-child(3) > p');
@@ -431,9 +469,48 @@ function testJsDom() {
     // // global.window = doc.defaultView;
     // console.log(doc);
     // console.log(doc?.defaultView);
+    // const body = {
+    //     url: 'https://sports.yahoo.com/the-daily-sweat-will-giannis-take-over-in-game-2-122807772.html?feature=enableMonalixaBodySlot&at_preview_token=E-TjFHZkpoHEfw5Er2ptjg&at_preview_index=1_1&at_preview_listed_activities_only=true',
+    //     // userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36'
+    // }
+    // const resourceLoader = new jsdom.ResourceLoader({
+    //     // userAgent: body.userAgent,
+    //     strictSSL: false, 
+    // });
+    // console.log(body, resourceLoader);
+    // const doy = await JSDOM.fromURL(body.url, {
+    //     resources: resourceLoader,
+    //     runScripts: "dangerously",
+    //     // resources: resourceLoader,
+    // })
+    //     .then(d => {
+    //     console.log('ddd => ', d);
+    //     // d.window.addEventListener('load', () => {
+    //     //     d.window.document.querySelectorAll('div').forEach(key => {
+    //     //         if (key.id) console.log(key.id);
+    //     //     });
+    //     // });
+    // });
+    // console.log('ddd => ', doy);
 
-    const shadowDom = dom.window.document.body.querySelector('#root')?.shadowRoot;
-    console.log('shadow dom', shadowDom);
+    // console.log('done//');
+    // const url = JSDOM.fromURL("https://reactjs.org/").then(d => {
+    //     console.log('react => ', d.serialize());
+    // });
+
+    // console.log('url => ', url);
+    const dom2 = new JSDOM(currHtml, { runScripts: 'dangerously' });
+
+    // const shadowDom = shadowDom.window.document.body.querySelector('#___gatsby')?.shadowRoot;
+
+    const shadowDomDoc = dom2.window.document;
+    console.log('shadow dom doc', shadowDomDoc, shadowDomDoc.body);
+
+    // const shadowDom = shadowDomDoc.body.querySelector('.w3-content')?.shadowRoot;
+    // const shadowDom = shadowDomDoc.body.querySelector('#root')?.shadowRoot;
+    console.log('shadow dom', shadowDom, shadowDom?.shadowRoot);
+
+
 
     // steps.forEach((step) => {
     //     if (step.action === 'visited') return;
@@ -729,13 +806,14 @@ async function widget1() {
 
         document.addEventListener('click', onClick);
 
+        testJsDom();
+
         //Repopulate the elements page if reloaded or routed to another page
         setTimeout(function () {
             repopulateElements(steps);
             console.log('repopulated end');
         }, 5000);
 
-        testJsDom();
     }
 }
 
