@@ -507,7 +507,7 @@ async function testJsDom() {
     console.log('shadow dom doc', shadowDomDoc, shadowDomDoc.body);
 
     // const shadowDom = shadowDomDoc.body.querySelector('.w3-content')?.shadowRoot;
-    // const shadowDom = shadowDomDoc.body.querySelector('#root')?.shadowRoot;
+    const shadowDom = shadowDomDoc.body.querySelector('#root');
     console.log('shadow dom', shadowDom, shadowDom?.shadowRoot);
 
 
