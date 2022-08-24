@@ -512,21 +512,21 @@ async function testJsDom() {
 
 
 
-    // steps.forEach((step) => {
-    //     if (step.action === 'visited') return;
+    steps.forEach((step) => {
+        if (step.action === 'visited') return;
 
-    //     if (currentPage === step.currentPage) {
-    //         console.log('finding ', step.value);
+        if (currentPage === step.currentPage) {
+            console.log('finding ', step.value);
 
-    //         const htmlElement = jsDomDoc?.querySelector?.(step.value);
-    //         console.log('htmlElement', htmlElement);
+            const htmlElement = shadowDom?.querySelector?.(step.value);
+            console.log('htmlElement', htmlElement);
 
-    //         if (htmlElement) {
-    //             htmlElement.setAttribute('data-funnel-id', step.index);
-    //             htmlElement.classList.add('redata-widget-add-selected-border');
-    //         }
-    //     }
-    // });
+            if (htmlElement) {
+                htmlElement.setAttribute('data-funnel-id', step.index);
+                htmlElement.classList.add('redata-widget-add-selected-border');
+            }
+        }
+    });
     // const div = shadowDom?.querySelectorAll('.abc')[0]
 
     // console.log(Array.from(div?.classList))
