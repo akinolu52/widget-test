@@ -518,7 +518,7 @@ async function testJsDom() {
         if (currentPage === step.currentPage) {
             console.log('finding ', step.value);
 
-            const htmlElement = shadowDom?.querySelector?.(step.value);
+            const htmlElement = shadowDomDoc?.querySelector?.(step.value);
             console.log('htmlElement', htmlElement);
 
             if (htmlElement) {
