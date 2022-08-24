@@ -351,7 +351,7 @@ const onClick = (event) => {
 
             activeFunnel = steps.length;
 
-            // localStorage.setItem('redata_funnel', JSON.stringify(steps));
+            localStorage.setItem('redata_funnel', JSON.stringify(steps));
             //Add attribute to
             target.setAttribute('data-funnel-id', steps.length);
             // appendStep(step, step.index);
