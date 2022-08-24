@@ -510,7 +510,7 @@ async function testJsDom() {
     const shadowDom = shadowDomDoc.body.querySelector('#root');
     console.log('shadow dom', shadowDom, shadowDom?.shadowRoot);
 
-
+    const currentPage = window.location.href;
 
     steps.forEach((step) => {
         if (step.action === 'visited') return;
