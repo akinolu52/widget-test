@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "browserify index.js -o bundle.js",
+    "dev": "watchify index.js -o bundle.js -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "happy-dom": "^6.0.4",
     "jsdom": "^20.0.0"
   }
 }

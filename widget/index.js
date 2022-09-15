@@ -1,11 +1,4 @@
-// import { Window } from 'happy-dom';
-// const happyDom = require('happy-dom');
-// const { Window } = happyDom;
-
 console.log('loaded');
-
-// const happyDomWindow = new Window();
-// const happyDomDocument = happyDomWindow.document;
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -41,33 +34,6 @@ function getFullPath(targetElement) {
 
     return `html > ${stack.join(' > ')}`;
 };
-
-function getDomPath(el) {
-    var stack = [];
-    while (el.parentNode != null) {
-        console.log(el.nodeName);
-        var sibCount = 0;
-        var sibIndex = 0;
-        for (var i = 0; i < el.parentNode.childNodes.length; i++) {
-            var sib = el.parentNode.childNodes[i];
-            if (sib.nodeName == el.nodeName) {
-                if (sib === el) {
-                    sibIndex = sibCount;
-                }
-                sibCount++;
-            }
-        }
-        if (el.hasAttribute('id') && el.id != '') {
-            stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
-        } else if (sibCount > 1) {
-            stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
-        } else {
-            stack.unshift(el.nodeName.toLowerCase());
-        }
-        el = el.parentNode;
-    }
-    return stack.join(' > ');
-}
 
 const getPosAsChildOfParent = (sib) => {
     const parentChildCount = sib.parentNode.childElementCount;
@@ -339,7 +305,6 @@ const onClick = (event) => {
             const id = target.id ? `#${target.id}` : getFullPath(target);
 
             console.log(getFullPath(target));
-            // console.log(getDomPath(target));
 
             const step = {
                 action: 'CLICK',
@@ -510,8 +475,8 @@ async function testJsDom() {
     console.log('shadow dom doc', shadowDomDoc, shadowDomDoc.body);
 
     // const shadowDom = shadowDomDoc.body.querySelector('.w3-content')?.shadowRoot;
-    const shadowDom = shadowDomDoc.body.querySelector('#root');
-    console.log('shadow dom', shadowDom, shadowDom?.shadowRoot);
+    // const shadowDom = shadowDomDoc.body.querySelector('#root');
+    // console.log('shadow dom', shadowDom, shadowDom?.shadowRoot);
 
     const currentPage = window.location.href;
 
@@ -556,6 +521,7 @@ async function widget1() {
 
     async function getConfig() {
         // fetch request to get the config
+        console.log('bbb ', document.currentScript.dataset.config);
         const result = await fetch(document.currentScript.dataset.config);
         const config = await result.json();
         return config;
@@ -589,7 +555,7 @@ async function widget1() {
         let cssFile = document.createElement("link");
         cssFile.type = "text/css";
         cssFile.rel = "stylesheet";
-        cssFile.href = "https://cdn.jsdelivr.net/gh/akinolu52/widget-test@test-1/widget/styles.css";
+        cssFile.href = "https://cdn.jsdelivr.net/gh/akinolu52/widget-test@test-16/widget/styles.css";
         document.head.appendChild(cssFile);
     }
 
